@@ -50,26 +50,20 @@ public class Personnage {
         this.type = type;
     }
 
-//    EquipementOffensif equipementOffensif = new EquipementOffensif();
-//    EquipementDefensif equipementDefensif = new EquipementDefensif();
 
     public String toString(){
         return
                 "Nom : " + nom + "\n" +
-                "Type : " + type + "\n" +
-                "Niveau de vie : " + niveauDeVie + "\n" +
-                "Force d'attaque : "
+                        "Type : " + type + "\n" +
+                        "Niveau de vie : " + niveauDeVie + "\n" +
+                        "Force d'attaque : "
                         + (forceDAttaque
                         +
-                         equipementOffensif.getNivDAttaque())
+                        equipementOffensif.getNivDAttaque())
                         + "\n" +
-                "Equipement Offenssif : " + "\n" +
+                        "Equipement Offenssif : " + "\n" +
                         equipementOffensif + "\n" +
-                "Equipement Défensif : " + "\n" +
+                        "Equipement Défensif : " + "\n" +
                         equipementDefensif;
     }
 }
-
-
-
-
