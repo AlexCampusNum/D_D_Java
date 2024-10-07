@@ -1,4 +1,8 @@
+import Personnage.Personnage;
+
 import java.util.Scanner;
+import Personnage.Magicien;
+import Personnage.Guerrier;
 
 public class Menu {
     private final Scanner scanner;
@@ -16,7 +20,7 @@ public class Menu {
 //            displayWithDelay("Elle contient un clavier, en pierre aussi.");
 //            displayWithDelay("Il est écrit dessus : 'Bienvenue aventurier, que voulez-vous faire ?'");
             displayWithDelay("Taper 'creer' pour créer une partie ou 'exit' pour quitter la partie :");
-            displayWithDelay("Quittez la partie à vos risques et périls.");
+//            displayWithDelay("Quittez la partie à vos risques et périls.");
 
             String input = scanner.nextLine();
             checkExit(input);
@@ -26,10 +30,13 @@ public class Menu {
                 String type = getInput("Entrer le type du personnage (Magicien ou Guerrier) :");
 
                 Personnage personnage;
-                if (type.equalsIgnoreCase("Magicien") || type.equalsIgnoreCase("Guerrier")) {
-                    personnage = new Personnage(nom, type);
-                }else{
-                    personnage = new Personnage(nom);
+                if (type.equalsIgnoreCase("Magicien")) {
+                    personnage = new Magicien(nom);
+                } else if (type.equalsIgnoreCase("Guerrier")) {
+                    personnage = new Guerrier(nom);
+                } else {
+                    System.out.println("Type non reconnu. Création d'un Magicien par défaut.");
+                    personnage = new Magicien(nom);
                 }
                 afficherPersonnage(personnage);
                 modify(personnage);
@@ -184,8 +191,11 @@ public class Menu {
                     break;
                 case "2":
                     String nouveauType = getInput("Entrez le nouveau type (Magicien ou Guerrier) :");
-                    if (nouveauType.equalsIgnoreCase("Magicien") || nouveauType.equalsIgnoreCase("Guerrier")) {
-                        personnage = new Personnage(personnage.getNom(), nouveauType);
+                    if (nouveauType.equalsIgnoreCase("Magicien")) {
+                        personnage = new Magicien(personnage.getNom());
+                        System.out.println("Type modifié avec succès.");
+                    }else if(nouveauType.equalsIgnoreCase("Guerrier")){
+                        personnage = new Guerrier(personnage.getNom());
                         System.out.println("Type modifié avec succès.");
                     } else {
                         System.out.println("Type non valide. Le type n'a pas été modifié.");
