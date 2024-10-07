@@ -3,7 +3,7 @@ package Personnage;
 import Equipement.EquipementDefensif;
 import Equipement.EquipementOffensif;
 
-public abstract class  Personnage {
+public abstract class Personnage {
 
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_RESET = "\u001B[0m";
@@ -15,31 +15,10 @@ public abstract class  Personnage {
     private EquipementOffensif equipementOffensif;
     private EquipementDefensif equipementDefensif;
 
-//    public Personnage.Personnage(){
-//        this("Marbluf");
-//    }
-//
-//    public Personnage.Personnage(String nom){
-//        this(nom, "Personnage.Personnage.Magicien");
-//    }
 
     public Personnage(String nom, String type){
         this.nom = nom;
         this.type = type;
-//        if(Objects.equals(this.type, "Personnage.Personnage.Magicien")) {
-//            this.type = new Personnage.Personnage.Magicien();
-//            this.niveauDeVie = 6;
-//            this.forceDAttaque = 15;
-//            this.equipementOffensif = new Equipement.EquipementOffensif();
-//            this.equipementDefensif = new Equipement.EquipementDefensif();
-//        }
-//        if(Objects.equals(this.type, "Personnage.Personnage.Guerrier")) {
-//           this.type = new Personnage.Personnage.Guerrier();
-//            this.niveauDeVie = 10;
-//            this.forceDAttaque = 10;
-//            this.equipementOffensif = new Equipement.EquipementOffensif("Equipement.Arme", 3, "Massue");
-//            this.equipementDefensif = new Equipement.EquipementDefensif("Equipement.Bouclier", 2, "l'égide");
-//        }
     }
 
     public String getNom(){

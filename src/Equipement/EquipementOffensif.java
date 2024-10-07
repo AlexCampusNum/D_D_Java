@@ -5,24 +5,6 @@ public abstract class EquipementOffensif {
     private int nivDAttaque;
     private String nom;
 
-//    public Equipement.EquipementOffensif(){
-//        this("Equipement.Sort");
-//    }
-//
-//    public Equipement.EquipementOffensif(String type){
-//        this(type, 2);
-//    }
-//
-//    public Equipement.EquipementOffensif(String type, int nivDAttaque){
-//        this(type, nivDAttaque, "Éclair");
-//    }
-//
-//    public Equipement.EquipementOffensif(String type, int nivDAttaque, String nom){
-//        this.type = type;
-//        this.nivDAttaque = nivDAttaque;
-//        this.nom = nom;
-//    }
-
     public String getType() {
         return type;
     }
