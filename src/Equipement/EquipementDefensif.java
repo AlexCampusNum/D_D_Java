@@ -1,8 +1,10 @@
 package Equipement;
+import Case.Case;
+import Personnage.Personnage;
 
-public abstract class EquipementDefensif {
+public abstract class EquipementDefensif implements Case {
     private String type;
-    private int nivDefence;
+    private int nivDefense;
     private String nom;
 
     public String getType() {
@@ -11,11 +13,11 @@ public abstract class EquipementDefensif {
     public void setType(String type) {
         this.type = type;
     }
-    public int getNivDefence() {
-        return nivDefence;
+    public int getNivDefense() {
+        return nivDefense;
     }
-    public void setNivDefence(int nivDefence) {
-        this.nivDefence = nivDefence;
+    public void setNivDefense(int nivDefense) {
+        this.nivDefense = nivDefense;
     }
     public String getNom() {
         return nom;
@@ -26,8 +28,12 @@ public abstract class EquipementDefensif {
 
     public String toString(){
         return "Défence de type : " + type + "\n" +
-                "Niveau : " + "+ " + nivDefence + "\n" +
+                "Niveau : " + "+ " + nivDefense + "\n" +
                 "Nom : " + nom;
+    }
+
+    public void interagir(Personnage personnage){
+
     }
 
 }

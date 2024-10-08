@@ -25,7 +25,7 @@ public abstract class Personnage {
         return nom;
     }
 
-    public void setName(String nom){
+    public void setNom(String nom){
         this.nom = nom;
     }
 

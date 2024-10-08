@@ -1,7 +1,10 @@
+import Equipement.Arme;
+import Equipement.EquipementOffensif;
 import Personnage.Personnage;
 import Personnage.Magicien;
 import Personnage.Guerrier;
 import java.util.Scanner;
+import Case.Case;
 
 public class Menu {
     private final Scanner scanner;
@@ -228,7 +231,7 @@ public class Menu {
             switch (choix) {
                 case "1":
                     String nouveauNom = getInput("Entrez le nouveau nom :");
-                    personnage.setName(nouveauNom);
+                    personnage.setNom(nouveauNom);
                     System.out.println("Nom modifié avec succès.");
                     break;
                 case "2":
