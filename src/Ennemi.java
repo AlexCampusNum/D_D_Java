@@ -3,19 +3,17 @@ import Personnage.Personnage;
 
 public class Ennemi implements Case {
     private String nom;
-    private int nivDefense;
     private int forceDAttaque;
     private int pointDeVie;
 
-    public Ennemi(String nom, int nivDefense, int forceDAttaque, int pointDeVie) {
+    public Ennemi(String nom, int forceDAttaque, int pointDeVie) {
         this.nom = nom;
-        this.nivDefense = nivDefense;
         this.forceDAttaque = forceDAttaque;
         this.pointDeVie = pointDeVie;
     }
 
     public void interagir(Personnage personnage){
-
+        System.out.println("Vous vous retrouvez face à un " + nom);
     }
 
 
@@ -25,14 +23,6 @@ public class Ennemi implements Case {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public int getNivDefense() {
-        return nivDefense;
-    }
-
-    public void setNivDefense(int nivDefense) {
-        this.nivDefense = nivDefense;
     }
 
     public int getForceDAttaque() {

@@ -2,7 +2,7 @@ package Equipement;
 import Case.Case;
 import Personnage.Personnage;
 
-public abstract class EquipementDefensif implements Case {
+public abstract class EquipementDefensif {
     private String type;
     private int nivDefense;
     private String nom;
@@ -30,10 +30,6 @@ public abstract class EquipementDefensif implements Case {
         return "Défence de type : " + type + "\n" +
                 "Niveau : " + "+ " + nivDefense + "\n" +
                 "Nom : " + nom;
-    }
-
-    public void interagir(Personnage personnage){
-
     }
 
 }

@@ -9,7 +9,7 @@ public class Guerrier extends Personnage {
         super(nom, "Guerrier");
         this.setNiveauDeVie(10);
         this.setForceDAttaque(10);
-        this.setEquipementOffensif(new Arme());
-        this.setEquipementDefensif(new Bouclier());
+        this.setEquipementOffensif(new Arme("Arme", 3, "Massue"));
+        this.setEquipementDefensif(new Bouclier("Bouclier", 2, "L'Égide"));
     }
 }

@@ -73,6 +73,8 @@ public abstract class Personnage {
                 ANSI_RESET +
                 "Nom : " + nom + "\n" +
                 "Type : " + type + "\n" +
+                "Niveau de vie : " + niveauDeVie + "\n" +
+                "Type : " + (forceDAttaque + equipementOffensif.getNivDAttaque()) + "\n" +
                 ANSI_BLUE +
                 "Equipement Offensif : " + "\n" +
                 ANSI_RESET

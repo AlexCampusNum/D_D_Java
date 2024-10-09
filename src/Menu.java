@@ -67,13 +67,14 @@ public class Menu {
             scanner.nextLine();
 
             int roll = game.rollDice();
-            boolean gameFinished = game.playTurn(roll);
 
             System.out.println("Vous avez lancé un " + roll);
-            System.out.println("Vous êtes maintenant sur la case " + game.getCurrentPosition() + " / " + game.getBoardSize());
+            System.out.println("Vous êtes maintenant sur la case " + (game.getCurrentPosition() + 2) + " / " + game.getBoardSize());
+
+            boolean gameFinished = game.playTurn(roll);
 
             if (gameFinished) {
-                System.out.println("\nFélicitations ! Vous avez atteint la fin du plateau !");
+                System.out.println("\nFélicitations ! Vous êtes arrivé au bout !");
                 if (!askToPlayAgain()) {
                     break;
                 }

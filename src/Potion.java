@@ -14,7 +14,11 @@ public class Potion implements Case {
     }
 
     public void interagir(Personnage personnage){
-
+        System.out.println("Vous trouvez une " + nom);
+        int actualLevel = personnage.getNiveauDeVie();
+        int newLevel = actualLevel + valeur;
+        personnage.setNiveauDeVie(newLevel);
+        System.out.println("Votre niveau de vie augmente, il est maintenant de " + personnage.getNiveauDeVie());
     }
 
     public String getType() {

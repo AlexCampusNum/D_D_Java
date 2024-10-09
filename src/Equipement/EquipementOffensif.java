@@ -2,7 +2,7 @@ package Equipement;
 import Case.Case;
 import Personnage.Personnage;
 
-public abstract class EquipementOffensif implements Case {
+public abstract class EquipementOffensif{
     private String type;
     private int nivDAttaque;
     private String nom;
@@ -32,7 +32,4 @@ public abstract class EquipementOffensif implements Case {
                 "Nom : " + nom;
     }
 
-    public void interagir(Personnage personnage){
-
-    }
 }
