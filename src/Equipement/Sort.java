@@ -1,8 +1,9 @@
 package Equipement;
 
+import Case.Case;
 import Personnage.Personnage;
 
-public class Sort extends EquipementOffensif {
+public class Sort extends EquipementOffensif implements Case {
     public Sort(String type, int nivDAttaque, String nom) {
         this.setType(type);
         this.setNivDAttaque(nivDAttaque);

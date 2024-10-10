@@ -67,14 +67,22 @@ public class Menu {
             scanner.nextLine();
 
             int roll = game.rollDice();
-
             System.out.println("Vous avez lancé un " + roll);
-            System.out.println("Vous êtes maintenant sur la case " + (game.getCurrentPosition() + 2) + " / " + game.getBoardSize());
 
-            boolean gameFinished = game.playTurn(roll);
+            try {
+                boolean gameFinished = game.playTurn(roll);
+                System.out.println("Vous êtes maintenant sur la case " + (game.getCurrentPosition() + 1) + " / " + game.getBoardSize());
 
-            if (gameFinished) {
-                System.out.println("\nFélicitations ! Vous êtes arrivé au bout !");
+                if (gameFinished) {
+                    System.out.println("\nFélicitations ! Vous êtes arrivé au bout !");
+                    if (!askToPlayAgain()) {
+                        break;
+                    }
+                    game.resetGame();
+                }
+
+            } catch (PersonnageHorsPlateauException e) {
+                System.out.println(e.getMessage());
                 if (!askToPlayAgain()) {
                     break;
                 }

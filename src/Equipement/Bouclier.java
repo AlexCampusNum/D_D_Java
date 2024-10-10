@@ -1,8 +1,9 @@
 package Equipement;
 
+import Case.Case;
 import Personnage.Personnage;
 
-public class Bouclier extends EquipementDefensif {
+public class Bouclier extends EquipementDefensif implements Case {
     public Bouclier(String type, int nivDefense, String nom) {
         this.setType(type);
         this.setNivDefense(nivDefense);

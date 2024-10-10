@@ -1,8 +1,9 @@
 package Equipement;
 
+import Case.Case;
 import Personnage.Personnage;
 
-public class Philtre extends EquipementDefensif {
+public class Philtre extends EquipementDefensif implements Case {
     public Philtre(String type, int nivDefense, String nom) {
         this.setType(type);
         this.setNivDefense(nivDefense);

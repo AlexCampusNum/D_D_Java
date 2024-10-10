@@ -33,17 +33,23 @@ public class Game {
         return plateau;
     }
 
-    public boolean playTurn(int roll) {
+    public boolean playTurn(int roll) throws PersonnageHorsPlateauException {
         movePlayer(roll);
         return currentPosition >= (BOARD_SIZE -1);
     }
 
     public int rollDice() {
-        return dice.nextInt(1) + 1;
+        return dice.nextInt(6) + 1;
     }
 
-    private void movePlayer(int roll) {
-        currentPosition = Math.min((currentPosition) + roll, BOARD_SIZE);
+    private void movePlayer(int roll) throws PersonnageHorsPlateauException {
+        int newPosition = currentPosition + roll;
+
+        if (newPosition >= BOARD_SIZE) {
+            throw new PersonnageHorsPlateauException("Erreur : Le joueur est sorti du plateau !");
+        }
+
+        currentPosition = newPosition;
         Case currentCase = BOARD.get(currentPosition);
         currentCase.interagir(player);
     }

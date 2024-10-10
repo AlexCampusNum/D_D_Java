@@ -3,7 +3,7 @@ package Equipement;
 import Case.Case;
 import Personnage.Personnage;
 
-public class Arme  extends EquipementOffensif{
+public class Arme  extends EquipementOffensif implements Case{
     public Arme(String type, int nivDAttaque, String nom) {
         this.setType(type);
         this.setNivDAttaque(nivDAttaque);
