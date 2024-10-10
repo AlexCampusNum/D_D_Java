@@ -1,6 +1,4 @@
-package Equipement;
-import Case.Case;
-import Personnage.Personnage;
+package fr.le_campus_numerique.java.dd.equipement;
 
 public abstract class EquipementDefensif {
     private String type;

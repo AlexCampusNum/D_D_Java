@@ -1,14 +1,19 @@
-import Case.Case;
-import Case.CaseVide;
-import Equipement.Arme;
-import Equipement.Sort;
-import Personnage.Personnage;
+package fr.le_campus_numerique.java.dd.game;
+
+import fr.le_campus_numerique.java.dd.ennemi.*;
+import fr.le_campus_numerique.java.dd.equipement.sort.*;
+import fr.le_campus_numerique.java.dd.equipement.arme.*;
+import fr.le_campus_numerique.java.dd.personnage.Personnage;
+import fr.le_campus_numerique.java.dd.potion.*;
+import fr.le_campus_numerique.java.dd.potion.dossier.Case;
+import fr.le_campus_numerique.java.dd.potion.dossier.CaseVide;
+
 import java.util.Random;
 import java.util.ArrayList;
 
 public class Game {
     ArrayList<Case> BOARD = new ArrayList();
-    private final int BOARD_SIZE = 64;
+    private final int BOARD_SIZE = 5;
     private Personnage player;
     private int currentPosition;
     private Random dice;
@@ -20,15 +25,16 @@ public class Game {
         this.BOARD = this.creerPlateau(BOARD_SIZE);
     }
 
+
     public ArrayList<Case> creerPlateau(int size){
         ArrayList<Case> plateau = new ArrayList<Case>();
         for(int i = 0; i < size; i++){
             plateau.add(new CaseVide());
         }
-        plateau.set(1, new Ennemi("Gnome", 2, 6));
-        plateau.set(2, new Arme("Arme", 5, "Épée"));
-        plateau.set(3, new Potion("Vie", "Potion de vie", 5));
-        plateau.set(4, new Sort("Sort", 7, "Boule de feu"));
+        plateau.set(1, new Gobelin());
+        plateau.set(2, new Epee());
+        plateau.set(3, new PotionStandard());
+        plateau.set(4, new BouleDeFeu());
 
         return plateau;
     }
@@ -39,7 +45,7 @@ public class Game {
     }
 
     public int rollDice() {
-        return dice.nextInt(6) + 1;
+        return dice.nextInt(1) + 1;
     }
 
     private void movePlayer(int roll) throws PersonnageHorsPlateauException {

@@ -1,7 +1,8 @@
-package Equipement;
+package fr.le_campus_numerique.java.dd.equipement.bouclier;
 
-import Case.Case;
-import Personnage.Personnage;
+import fr.le_campus_numerique.java.dd.potion.dossier.Case;
+import fr.le_campus_numerique.java.dd.equipement.EquipementDefensif;
+import fr.le_campus_numerique.java.dd.personnage.*;
 
 public class Bouclier extends EquipementDefensif implements Case {
     public Bouclier(String type, int nivDefense, String nom) {
@@ -12,9 +13,9 @@ public class Bouclier extends EquipementDefensif implements Case {
 
     public void interagir(Personnage personnage) {
         System.out.println("Vous trouvez une " + getNom());
-        if (this.getType().equals(personnage.getEquipementDefensif().getType())) {
+        if (personnage instanceof Guerrier && this.getNivDefense() > personnage.getEquipementDefensif().getNivDefense()) {
             personnage.setEquipementDefensif(this);
-            System.out.println("Vous équipez " + personnage.getNom() + " avec " + getNom());
+            System.out.println(personnage.getNom() + " est maintenant équipé avec un " + getNom());
         } else {
             System.out.println("Ce personnage ne peut pas équiper ce bouclier.");
         }

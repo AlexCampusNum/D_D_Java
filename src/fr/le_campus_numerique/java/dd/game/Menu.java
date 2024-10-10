@@ -1,10 +1,9 @@
-import Equipement.Arme;
-import Equipement.EquipementOffensif;
-import Personnage.Personnage;
-import Personnage.Magicien;
-import Personnage.Guerrier;
+package fr.le_campus_numerique.java.dd.game;
+
+import fr.le_campus_numerique.java.dd.personnage.Personnage;
+import fr.le_campus_numerique.java.dd.personnage.Magicien;
+import fr.le_campus_numerique.java.dd.personnage.Guerrier;
 import java.util.Scanner;
-import Case.Case;
 
 public class Menu {
     private final Scanner scanner;

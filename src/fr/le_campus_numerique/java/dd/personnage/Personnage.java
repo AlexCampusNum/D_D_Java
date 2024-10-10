@@ -1,7 +1,7 @@
-package Personnage;
+package fr.le_campus_numerique.java.dd.personnage;
 
-import Equipement.EquipementDefensif;
-import Equipement.EquipementOffensif;
+import fr.le_campus_numerique.java.dd.equipement.EquipementDefensif;
+import fr.le_campus_numerique.java.dd.equipement.EquipementOffensif;
 
 public abstract class Personnage {
 
@@ -74,7 +74,7 @@ public abstract class Personnage {
                 "Nom : " + nom + "\n" +
                 "Type : " + type + "\n" +
                 "Niveau de vie : " + niveauDeVie + "\n" +
-                "Type : " + (forceDAttaque + equipementOffensif.getNivDAttaque()) + "\n" +
+                "Force d'attaque : " + forceDAttaque + "\n" +
                 ANSI_BLUE +
                 "Equipement Offensif : " + "\n" +
                 ANSI_RESET
