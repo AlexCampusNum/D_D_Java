@@ -17,8 +17,9 @@ public class Ennemi implements Case, Combattant {
 
     public void interagir(Personnage personnage) {
         System.out.println("Vous vous retrouvez face à un " + this.nom);
-        System.out.println("Ce " + this.nom + " a un niveau de vie de : " + this.pointDeVie);
-        System.out.println("Le combat commence avec le " + this.nom);
+        System.out.println("Ce " + this.nom + " a un niveau de vie de " + this.pointDeVie);
+        System.out.println("Votre niveau de vie est de " + personnage.getNiveauDeVie());
+        System.out.println("Le combat commence contre ce " + this.nom);
 
         combattre(personnage);
     }

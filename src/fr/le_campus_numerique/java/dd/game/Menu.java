@@ -62,6 +62,13 @@ public class Menu {
         System.out.println("Vous commencez sur la case 1.");
     }
 
+    public String askUsePotion() {
+        System.out.println("Voulez-vous utiliser une potion ? (oui/non)");
+        String result = scanner.nextLine();
+
+        return result;
+    }
+
     public void nextTurn() {
         System.out.println("\nAppuyez sur Entrée pour lancer le dé...");
         scanner.nextLine();

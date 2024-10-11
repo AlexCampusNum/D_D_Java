@@ -8,6 +8,7 @@ import fr.le_campus_numerique.java.dd.potion.*;
 import fr.le_campus_numerique.java.dd.caseDd.Case;
 import fr.le_campus_numerique.java.dd.caseDd.CaseVide;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,6 +85,12 @@ public class Game {
     public void playGame(){
         menu.welcome(player);
         while(true){
+            if(!Objects.equals(player.getStockIndex(), 0)) {
+                String result = menu.askUsePotion();
+                if (result.equals("oui")) {
+                    player.utiliserPotionDuStock(player.getStockIndex());
+                }
+            }
             menu.nextTurn();
 
             int roll = rollDice();

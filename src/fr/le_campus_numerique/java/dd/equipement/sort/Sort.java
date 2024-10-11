@@ -12,7 +12,7 @@ public class Sort extends EquipementOffensif implements Case {
     }
 
     public void interagir(Personnage personnage) {
-        System.out.println("Vous trouvez une " + getNom());
+        System.out.println("Vous trouvez un sort " + getNom());
         if (personnage instanceof Magicien && this.getNivDAttaque() > personnage.getEquipementOffensif().getNivDAttaque()) {
             personnage.setEquipementOffensif(this);
             System.out.println(personnage.getNom() + " est maintenant équipé avec le sort " + getNom());
