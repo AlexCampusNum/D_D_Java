@@ -1,9 +1,10 @@
 package fr.le_campus_numerique.java.dd.ennemi;
 
 import fr.le_campus_numerique.java.dd.caseDd.Case;
+import fr.le_campus_numerique.java.dd.combat.Combattant;
 import fr.le_campus_numerique.java.dd.personnage.Personnage;
 
-public class Ennemi implements Case {
+public class Ennemi implements Case, Combattant {
     private String nom;
     private int forceDAttaque;
     private int pointDeVie;
@@ -14,29 +15,41 @@ public class Ennemi implements Case {
         this.pointDeVie = pointDeVie;
     }
 
-    public void interagir(Personnage personnage){
+    public void interagir(Personnage personnage) {
         System.out.println("Vous vous retrouvez face à un " + this.nom);
-        System.out.println("Ce " + this.nom + " à un niveau de vie de : " + this.pointDeVie);
-        System.out.println("Vous attaquez ce " + this.nom);
+        System.out.println("Ce " + this.nom + " a un niveau de vie de : " + this.pointDeVie);
+        System.out.println("Le combat commence avec le " + this.nom);
 
-        while (this.pointDeVie > 0 && personnage.getNiveauDeVie() > 0) {
-            this.pointDeVie -= personnage.getForceDAttaque();
-            if(this.pointDeVie > 0) {
-                System.out.println("Le " + this.nom + " à son niveau de vie à : " + this.pointDeVie);
-            }else{
-                System.out.println("Vous terrassez finalement ce " + this.nom + ".");
-                break;
-            }
+        combattre(personnage);
+    }
 
-            personnage.setNiveauDeVie(personnage.getNiveauDeVie() - this.forceDAttaque);
-            if(personnage.getNiveauDeVie() > 0) {
-                System.out.println("Vous encaissez les coups, votre vie est à : " + personnage.getNiveauDeVie());
-            }else{
-                System.out.println("Vous êtes vaincu.");
-                break;
+    private void combattre(Personnage personnage) {
+        if (this.estVivant() && personnage.estVivant()) {
+            System.out.println(personnage.getNom() + " attaque !");
+            this.encaisserAttaque(personnage.getForceDAttaque());
+
+            if (this.estVivant()) {
+                System.out.println(this.nom + " contre-attaque !");
+                personnage.encaisserAttaque(this.forceDAttaque);
+
+                combattre(personnage);
             }
         }
     }
+
+    public void encaisserAttaque(int degats) {
+        this.pointDeVie -= degats;
+        if (this.pointDeVie > 0) {
+            System.out.println(this.nom + " encaisse, son niveau de vie est à : " + this.pointDeVie);
+        } else {
+            System.out.println(this.nom + " est terrassé !");
+        }
+    }
+
+    public boolean estVivant() {
+        return this.pointDeVie > 0;
+    }
+
 
 
     public String getNom() {

@@ -2,8 +2,9 @@ package fr.le_campus_numerique.java.dd.personnage;
 
 import fr.le_campus_numerique.java.dd.equipement.EquipementDefensif;
 import fr.le_campus_numerique.java.dd.equipement.EquipementOffensif;
+import fr.le_campus_numerique.java.dd.combat.Combattant;
 
-public abstract class Personnage {
+public abstract class Personnage implements Combattant {
 
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_RESET = "\u001B[0m";
@@ -66,6 +67,18 @@ public abstract class Personnage {
         this.equipementDefensif = equipementDefensif;
     }
 
+    public void encaisserAttaque(int degats) {
+        this.niveauDeVie -= degats;
+        if (this.niveauDeVie > 0) {
+            System.out.println(this.nom + " encaisse, son niveau de vie est à : " + this.niveauDeVie);
+        } else {
+            System.out.println(this.nom + " est vaincu.");
+        }
+    }
+
+    public boolean estVivant() {
+        return this.niveauDeVie > 0;
+    }
 
 
     public String toString() {
