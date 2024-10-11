@@ -15,7 +15,7 @@ public class Menu {
     public void startGame() {
         Personnage player = showMenu();
         Game game = new Game(player);
-        playGame(game);
+//        playGame(game);
     }
 
     public Personnage showMenu() {
@@ -57,50 +57,39 @@ public class Menu {
         }
     }
 
-    private void playGame(Game game) {
-        System.out.println("Bienvenue dans le jeu, " + game.getPlayer().getNom() + " !");
+    public void welcome(Personnage personnage) {
+        System.out.println("Bienvenue dans le jeu, " + personnage.getNom() + " !");
         System.out.println("Vous commencez sur la case 1.");
-
-        while (true) {
-            System.out.println("\nAppuyez sur Entrée pour lancer le dé...");
-            scanner.nextLine();
-
-            int roll = game.rollDice();
-            System.out.println("Vous avez lancé un " + roll);
-
-            try {
-                boolean gameFinished = game.playTurn(roll);
-                System.out.println("Vous êtes maintenant sur la case " + (game.getCurrentPosition() + 1) + " / " + game.getBoardSize());
-
-                if (gameFinished) {
-                    System.out.println("\nFélicitations ! Vous êtes arrivé au bout !");
-                    if (!askToPlayAgain()) {
-                        break;
-                    }
-                    game.resetGame();
-                }
-
-            } catch (PersonnageHorsPlateauException e) {
-                System.out.println(e.getMessage());
-                if (!askToPlayAgain()) {
-                    break;
-                }
-                game.resetGame();
-            }
-        }
     }
 
-    private boolean askToPlayAgain() {
+    public void nextTurn() {
+        System.out.println("\nAppuyez sur Entrée pour lancer le dé...");
+        scanner.nextLine();
+    }
+
+    public void displayRollDice(int roll){
+        System.out.println("Vous avez lancé un " + roll);
+    }
+
+    public void displayCase(int currentPosition, int boardSize){
+        System.out.println("Vous êtes maintenant sur la case " + (currentPosition + 1) + " / " + boardSize);
+    }
+
+    public void displayFinished(){
+        System.out.println("\nFélicitations ! Vous êtes arrivé au bout !");
+    }
+
+    public void displayError(PersonnageHorsPlateauException e){
+        System.out.println(e.getMessage());
+    }
+
+    public String askToPlayAgain() {
         System.out.println("Voulez-vous jouer à nouveau ? (oui/non)");
         String answer = scanner.nextLine().toLowerCase();
 
-        if (answer.equals("oui")) {
-            return true;
-        } else {
-            System.out.println("Merci d'avoir joué ! Au revoir.");
-            return false;
-        }
+        return answer;
     }
+
 
     private void checkExit(String input) {
         if (input.equalsIgnoreCase("exit")) {

@@ -22,9 +22,9 @@ public class Ennemi implements Case {
         while (this.pointDeVie > 0 && personnage.getNiveauDeVie() > 0) {
             this.pointDeVie -= personnage.getForceDAttaque();
             if(this.pointDeVie > 0) {
-                System.out.println("Le gobelin à son niveau de vie à : " + this.pointDeVie);
+                System.out.println("Le " + this.nom + " à son niveau de vie à : " + this.pointDeVie);
             }else{
-                System.out.println("Vous terrassez finalement ce gobelin.");
+                System.out.println("Vous terrassez finalement ce " + this.nom + ".");
                 break;
             }
 

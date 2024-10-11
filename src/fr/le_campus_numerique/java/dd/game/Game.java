@@ -3,17 +3,20 @@ package fr.le_campus_numerique.java.dd.game;
 import fr.le_campus_numerique.java.dd.ennemi.*;
 import fr.le_campus_numerique.java.dd.equipement.sort.*;
 import fr.le_campus_numerique.java.dd.equipement.arme.*;
+import fr.le_campus_numerique.java.dd.personnage.Guerrier;
+import fr.le_campus_numerique.java.dd.personnage.Magicien;
 import fr.le_campus_numerique.java.dd.personnage.Personnage;
 import fr.le_campus_numerique.java.dd.potion.*;
 import fr.le_campus_numerique.java.dd.potion.dossier.Case;
 import fr.le_campus_numerique.java.dd.potion.dossier.CaseVide;
+import fr.le_campus_numerique.java.dd.game.*;
 
 import java.util.Random;
 import java.util.ArrayList;
 
 public class Game {
     ArrayList<Case> BOARD = new ArrayList();
-    private final int BOARD_SIZE = 5;
+    private final int BOARD_SIZE = 64;
     private Personnage player;
     private int currentPosition;
     private Random dice;
@@ -74,13 +77,58 @@ public class Game {
         return plateau;
     }
 
+    public void startGame(){
+        Menu menu = new Menu();
+//        player = menu.showMenu();
+        playGame(menu);
+    }
+
+    public void playGame(Menu menu){
+        menu.welcome(player);
+        while(true){
+            menu.nextTurn();
+
+            int roll = rollDice();
+            menu.displayRollDice(roll);
+
+            try {
+                boolean gameFinished = playTurn(roll);
+                menu.displayCase(getCurrentPosition(), getBoardSize());
+
+                if (gameFinished) {
+                    menu.displayFinished();
+                    if (!askToPlayAgain(menu)) {
+                        break;
+                    }
+                    resetGame();
+                }
+            }catch(PersonnageHorsPlateauException e) {
+                menu.displayError(e);
+                if (!askToPlayAgain(menu)) {
+                    break;
+                }
+                resetGame();
+            }
+        }
+    }
+
+    private boolean askToPlayAgain(Menu menu){
+        String answer = menu.askToPlayAgain();
+        if (answer.equals("oui")) {
+            return true;
+        } else {
+            System.out.println("Merci d'avoir joué ! Au revoir.");
+            return false;
+        }
+    }
+
     public boolean playTurn(int roll) throws PersonnageHorsPlateauException {
         movePlayer(roll);
         return currentPosition >= (BOARD_SIZE -1);
     }
 
     public int rollDice() {
-        return dice.nextInt(1) + 1;
+        return dice.nextInt(6) + 1;
     }
 
     private void movePlayer(int roll) throws PersonnageHorsPlateauException {
