@@ -1,4 +1,5 @@
-package fr.le_campus_numerique.java.dd.potion.dossier;
+package fr.le_campus_numerique.java.dd.caseDd;
+
 import fr.le_campus_numerique.java.dd.personnage.Personnage;
 
 public interface Case {

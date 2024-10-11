@@ -1,6 +1,6 @@
 package fr.le_campus_numerique.java.dd.equipement.arme;
 
-import fr.le_campus_numerique.java.dd.potion.dossier.Case;
+import fr.le_campus_numerique.java.dd.caseDd.Case;
 import fr.le_campus_numerique.java.dd.equipement.EquipementOffensif;
 import fr.le_campus_numerique.java.dd.personnage.*;
 
@@ -18,7 +18,7 @@ public class Arme  extends EquipementOffensif implements Case{
             personnage.setEquipementOffensif(this);
             System.out.println(personnage.getNom() + " est maintenant équipé avec une " + getNom());
         } else {
-            System.out.println("Ce personnage ne peut pas s'équiper de cette arme.");
+            System.out.println("Ce personnage ne peut pas s'équiper de cette " + getNom());
         }
     }
 

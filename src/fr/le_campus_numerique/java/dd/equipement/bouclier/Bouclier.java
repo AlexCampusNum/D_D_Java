@@ -1,6 +1,6 @@
 package fr.le_campus_numerique.java.dd.equipement.bouclier;
 
-import fr.le_campus_numerique.java.dd.potion.dossier.Case;
+import fr.le_campus_numerique.java.dd.caseDd.Case;
 import fr.le_campus_numerique.java.dd.equipement.EquipementDefensif;
 import fr.le_campus_numerique.java.dd.personnage.*;
 

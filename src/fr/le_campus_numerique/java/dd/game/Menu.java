@@ -12,13 +12,13 @@ public class Menu {
         scanner = new Scanner(System.in);
     }
 
-    public void startGame() {
-        Personnage player = showMenu();
-        Game game = new Game(player);
-//        playGame(game);
-    }
+//    public void startGame() {
+//        Personnage player = createPlayer();
+//        Game game = new Game(player);
+////        playGame(game);
+//    }
 
-    public Personnage showMenu() {
+    public Personnage createPlayer() {
         while (true) {
 //                        displayWithDelay("Vous vous réveillez dans une pièce étrange.", 1000);
 //                        displayWithDelay("Vous ne vous rappelez pas comment vous êtes arrivé ici, ni même de vous être endormi.", 2000);
@@ -76,7 +76,8 @@ public class Menu {
     }
 
     public void displayFinished(){
-        System.out.println("\nFélicitations ! Vous êtes arrivé au bout !");
+        System.out.println("\nFélicitations ! Vous avez trouvez une sortie !");
+        System.out.println("Vous vous réveillez dans votre lit et réalisez que tout cela n'était qu'un rêve !!!");
     }
 
     public void displayError(PersonnageHorsPlateauException e){

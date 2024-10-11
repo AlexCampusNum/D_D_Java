@@ -3,16 +3,14 @@ package fr.le_campus_numerique.java.dd.game;
 import fr.le_campus_numerique.java.dd.ennemi.*;
 import fr.le_campus_numerique.java.dd.equipement.sort.*;
 import fr.le_campus_numerique.java.dd.equipement.arme.*;
-import fr.le_campus_numerique.java.dd.personnage.Guerrier;
-import fr.le_campus_numerique.java.dd.personnage.Magicien;
 import fr.le_campus_numerique.java.dd.personnage.Personnage;
 import fr.le_campus_numerique.java.dd.potion.*;
-import fr.le_campus_numerique.java.dd.potion.dossier.Case;
-import fr.le_campus_numerique.java.dd.potion.dossier.CaseVide;
-import fr.le_campus_numerique.java.dd.game.*;
+import fr.le_campus_numerique.java.dd.caseDd.Case;
+import fr.le_campus_numerique.java.dd.caseDd.CaseVide;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Game {
     ArrayList<Case> BOARD = new ArrayList();
@@ -20,9 +18,11 @@ public class Game {
     private Personnage player;
     private int currentPosition;
     private Random dice;
+    private Menu menu;
 
-    public Game(Personnage player) {
-        this.player = player;
+    public Game() {
+        this.menu = new Menu();
+        this.player = menu.createPlayer();
         this.currentPosition = 0;
         this.dice = new Random();
         this.BOARD = this.creerPlateau(BOARD_SIZE);
@@ -73,17 +73,15 @@ public class Game {
         for(int grandePotion : grandePotions){
             plateau.set(grandePotion, new GrandePotion());
         }
-
+        Collections.shuffle(plateau);
         return plateau;
     }
 
     public void startGame(){
-        Menu menu = new Menu();
-//        player = menu.showMenu();
-        playGame(menu);
+        playGame();
     }
 
-    public void playGame(Menu menu){
+    public void playGame(){
         menu.welcome(player);
         while(true){
             menu.nextTurn();
@@ -97,14 +95,14 @@ public class Game {
 
                 if (gameFinished) {
                     menu.displayFinished();
-                    if (!askToPlayAgain(menu)) {
+                    if (!askToPlayAgain()) {
                         break;
                     }
                     resetGame();
                 }
             }catch(PersonnageHorsPlateauException e) {
                 menu.displayError(e);
-                if (!askToPlayAgain(menu)) {
+                if (!askToPlayAgain()) {
                     break;
                 }
                 resetGame();
@@ -112,7 +110,7 @@ public class Game {
         }
     }
 
-    private boolean askToPlayAgain(Menu menu){
+    private boolean askToPlayAgain(){
         String answer = menu.askToPlayAgain();
         if (answer.equals("oui")) {
             return true;
@@ -135,7 +133,7 @@ public class Game {
         int newPosition = currentPosition + roll;
 
         if (newPosition >= BOARD_SIZE) {
-            throw new PersonnageHorsPlateauException("Erreur : Le joueur est sorti du plateau !");
+            throw new PersonnageHorsPlateauException("Erreur générée à la demande de cette merveilleuse itération qui nous demande de mettre des erreurs dans notre code pourtant parfait : Le joueur est allez plus loin que la dernière case !");
         }
 
         currentPosition = newPosition;

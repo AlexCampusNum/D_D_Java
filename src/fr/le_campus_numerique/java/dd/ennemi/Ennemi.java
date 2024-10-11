@@ -1,6 +1,6 @@
 package fr.le_campus_numerique.java.dd.ennemi;
 
-import fr.le_campus_numerique.java.dd.potion.dossier.Case;
+import fr.le_campus_numerique.java.dd.caseDd.Case;
 import fr.le_campus_numerique.java.dd.personnage.Personnage;
 
 public class Ennemi implements Case {
@@ -15,9 +15,9 @@ public class Ennemi implements Case {
     }
 
     public void interagir(Personnage personnage){
-        System.out.println("Vous vous retrouvez face à un " + nom);
-        System.out.println("Ce gobelin à un niveau de vie de : " + this.pointDeVie);
-        System.out.println("Vous attaquez ce gobelin");
+        System.out.println("Vous vous retrouvez face à un " + this.nom);
+        System.out.println("Ce " + this.nom + " à un niveau de vie de : " + this.pointDeVie);
+        System.out.println("Vous attaquez ce " + this.nom);
 
         while (this.pointDeVie > 0 && personnage.getNiveauDeVie() > 0) {
             this.pointDeVie -= personnage.getForceDAttaque();
