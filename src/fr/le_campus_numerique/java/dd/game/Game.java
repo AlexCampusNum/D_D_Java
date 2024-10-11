@@ -28,13 +28,48 @@ public class Game {
 
     public ArrayList<Case> creerPlateau(int size){
         ArrayList<Case> plateau = new ArrayList<Case>();
+
         for(int i = 0; i < size; i++){
             plateau.add(new CaseVide());
         }
-        plateau.set(1, new Gobelin());
-        plateau.set(2, new Epee());
-        plateau.set(3, new PotionStandard());
-        plateau.set(4, new BouleDeFeu());
+
+        int[] dragons = {44, 51, 55, 61};
+        int[] sorciers = {9, 19, 2, 31, 34, 35, 36, 39, 43, 46};
+        int[] gobelins = {2, 5, 8, 11, 14, 17, 20, 23, 26, 29};
+        int[] massues = {1, 10, 4, 21, 37};
+        int[] epees = {18, 25, 41, 52};
+        int[] eclairs = {0, 3, 7, 16, 22};
+        int[] bouleFeux = {47, 48};
+        int[] potionStandards = {6, 12, 30, 32, 38, 42};
+        int[] grandePotions = {27, 40};
+
+        for(int dragon : dragons){
+            plateau.set(dragon, new Dragon());
+        }
+        for(int sorcier : sorciers){
+            plateau.set(sorcier, new Sorcier());
+        }
+        for(int gobelin : gobelins){
+            plateau.set(gobelin, new Gobelin());
+        }
+        for(int massue : massues){
+            plateau.set(massue, new Massue());
+        }
+        for(int epee : epees){
+            plateau.set(epee, new Epee());
+        }
+        for(int eclair : eclairs){
+            plateau.set(eclair, new Eclair());
+        }
+        for(int bouleFeu : bouleFeux){
+            plateau.set(bouleFeu, new BouleDeFeu());
+        }
+        for(int potionStandard : potionStandards){
+            plateau.set(potionStandard, new PotionStandard());
+        }
+        for(int grandePotion : grandePotions){
+            plateau.set(grandePotion, new GrandePotion());
+        }
 
         return plateau;
     }
