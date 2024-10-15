@@ -1,24 +1,31 @@
 package fr.le_campus_numerique.java.dd.game;
 
-import fr.le_campus_numerique.java.dd.personnage.Personnage;
-import fr.le_campus_numerique.java.dd.personnage.Magicien;
-import fr.le_campus_numerique.java.dd.personnage.Guerrier;
+import fr.le_campus_numerique.java.dd.player.Player;
+import fr.le_campus_numerique.java.dd.player.Wizard;
+import fr.le_campus_numerique.java.dd.player.Warrior;
 import java.util.Scanner;
 
+/**
+ * Represents the menu system for the game.
+ * This class handles player creation, game flow, and user interactions.
+ */
 public class Menu {
     private final Scanner scanner;
 
+    /**
+     * Constructs a new Menu object.
+     * Initializes the scanner for user input.
+     */
     public Menu() {
         scanner = new Scanner(System.in);
     }
 
-//    public void startGame() {
-//        Personnage player = createPlayer();
-//        Game game = new Game(player);
-////        playGame(game);
-//    }
-
-    public Personnage createPlayer() {
+    /**
+     * Creates a new player based on user input.
+     *
+     * @return The created Player object
+     */
+    public Player createPlayer() {
         while (true) {
 //                        displayWithDelay("Vous vous réveillez dans une pièce étrange.", 1000);
 //                        displayWithDelay("Vous ne vous rappelez pas comment vous êtes arrivé ici, ni même de vous être endormi.", 2000);
@@ -37,31 +44,41 @@ public class Menu {
                 continue;
             }
 
-            String nom = getInput("Entrez votre nom :");
+            String name = getInput("Entrez votre nom :");
             String type = getInput("Entrer le type du personnage (Magicien ou Guerrier) :");
 
-            Personnage personnage;
+            Player player;
             if (type.equalsIgnoreCase("Magicien")) {
-                personnage = new Magicien(nom);
+                player = new Wizard(name);
             } else if (type.equalsIgnoreCase("Guerrier")) {
-                personnage = new Guerrier(nom);
+                player = new Warrior(name);
             } else {
                 System.out.println("Type non reconnu. Création d'un Magicien par défaut.");
-                personnage = new Magicien(nom);
+                player = new Wizard(name);
             }
-            afficherPersonnage(personnage);
-            modify(personnage);
-            displayWithDelay("Vous voyez des vêtements apparaître sur vous, cela ressemble à une tenue de " + personnage.getType(), 2000);
+            displayPlayer(player);
+            modify(player);
+            displayWithDelay("Vous voyez des vêtements apparaître sur vous, cela ressemble à une tenue de " + player.getType(), 2000);
 
-            return personnage;
+            return player;
         }
     }
 
-    public void welcome(Personnage personnage) {
-        System.out.println("Bienvenue dans le jeu, " + personnage.getNom() + " !");
+    /**
+     * Displays a welcome message for the player.
+     *
+     * @param personnage The Player object to welcome
+     */
+    public void welcome(Player personnage) {
+        System.out.println("Bienvenue dans le jeu, " + personnage.getName() + " !");
         System.out.println("Vous commencez sur la case 1.");
     }
 
+    /**
+     * Asks the player if they want to use a potion.
+     *
+     * @return The player's response as a String
+     */
     public String askUsePotion() {
         System.out.println("Voulez-vous utiliser une potion ? (oui/non)");
         String result = scanner.nextLine();
@@ -69,28 +86,55 @@ public class Menu {
         return result;
     }
 
+    /**
+     * Prompts the player to start the next turn.
+     */
     public void nextTurn() {
         System.out.println("\nAppuyez sur Entrée pour lancer le dé...");
         scanner.nextLine();
     }
 
+    /**
+     * Displays the result of a dice roll.
+     *
+     * @param roll The result of the dice roll
+     */
     public void displayRollDice(int roll){
         System.out.println("Vous avez lancé un " + roll);
     }
 
+    /**
+     * Displays the current position of the player on the board.
+     *
+     * @param currentPosition The current position of the player
+     * @param boardSize The total size of the game board
+     */
     public void displayCase(int currentPosition, int boardSize){
         System.out.println("Vous êtes maintenant sur la case " + (currentPosition + 1) + " / " + boardSize);
     }
 
+    /**
+     * Displays a message when the game is finished.
+     */
     public void displayFinished(){
         System.out.println("\nFélicitations ! Vous avez trouvez une sortie !");
         System.out.println("Vous vous réveillez dans votre lit et réalisez que tout cela n'était qu'un rêve !!!");
     }
 
-    public void displayError(PersonnageHorsPlateauException e){
+    /**
+     * Displays an error message when the player goes off the board.
+     *
+     * @param e The OffSetPlayerException that was thrown
+     */
+    public void displayError(OffSetPlayerException e){
         System.out.println(e.getMessage());
     }
 
+    /**
+     * Asks the player if they want to play again.
+     *
+     * @return The player's response as a String
+     */
     public String askToPlayAgain() {
         System.out.println("Voulez-vous jouer à nouveau ? (oui/non)");
         String answer = scanner.nextLine().toLowerCase();
@@ -98,8 +142,13 @@ public class Menu {
         return answer;
     }
 
-
-    private void checkExit(String input) {
+    /**
+     * Checks if the player wants to exit the game.
+     * If the input is "exit", displays a death message and terminates the program.
+     *
+     * @param input The user's input to check
+     */
+    public void checkExit(String input) {
         if (input.equalsIgnoreCase("exit")) {
             for(int i=0; i < 5; i++){
                 displayWithDelay("SOYEZ MAUDIT AVENTURIER !!!!", 1000);
@@ -217,14 +266,26 @@ public class Menu {
         }
     }
 
-    private String getInput(String message) {
+    /**
+     * Gets user input with a specified prompt message.
+     *
+     * @param message The prompt message to display
+     * @return The user's input as a String
+     */
+    public String getInput(String message) {
         System.out.println(message);
         String input = scanner.nextLine();
         checkExit(input);
         return input;
     }
 
-    public void modify(Personnage personnage) {
+    /**
+     * Allows the player to modify their character's attributes.
+     * The player can change the name or type of their character.
+     *
+     * @param player The Player object to be modified
+     */
+    public void modify(Player player) {
         while (true) {
             System.out.println("\nQue voulez-vous modifier ?");
             System.out.println("1. Nom");
@@ -236,16 +297,16 @@ public class Menu {
             switch (choix) {
                 case "1":
                     String nouveauNom = getInput("Entrez le nouveau nom :");
-                    personnage.setNom(nouveauNom);
+                    player.setName(nouveauNom);
                     System.out.println("Nom modifié avec succès.");
                     break;
                 case "2":
                     String nouveauType = getInput("Entrez le nouveau type (Magicien ou Guerrier) :");
                     if (nouveauType.equalsIgnoreCase("Magicien")) {
-                        personnage = new Magicien(personnage.getNom());
+                        player = new Wizard(player.getName());
                         System.out.println("Type modifié avec succès.");
                     }else if(nouveauType.equalsIgnoreCase("Guerrier")){
-                        personnage = new Guerrier(personnage.getNom());
+                        player = new Warrior(player.getName());
                         System.out.println("Type modifié avec succès.");
                     } else {
                         System.out.println("Type non valide. Le type n'a pas été modifié.");
@@ -253,7 +314,7 @@ public class Menu {
                     break;
                 case "3":
                     System.out.println("Modifications terminées.");
-                    afficherPersonnage(personnage);
+                    displayPlayer(player);
                     return;
                 default:
                     System.out.println("Choix non valide. Veuillez réessayer.");
@@ -261,10 +322,22 @@ public class Menu {
         }
     }
 
-    public void afficherPersonnage(Personnage personnage){
-        System.out.println(personnage);
+    /**
+     * Displays the current attributes of the player.
+     *
+     * @param player The Player object to be displayed
+     */
+    public void displayPlayer(Player player){
+        System.out.println(player);
     }
 
+    /**
+     * Displays a message with a specified delay.
+     * This method is used to create a more immersive experience by introducing pauses between messages.
+     *
+     * @param message The message to be displayed
+     * @param delay The delay in milliseconds before the message is displayed
+     */
     public void displayWithDelay(String message, int delay){
         try {
             Thread.sleep(delay);
