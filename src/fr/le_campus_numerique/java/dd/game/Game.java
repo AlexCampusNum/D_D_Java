@@ -189,6 +189,13 @@ public class Game {
 
         currentPosition = newPosition;
         Space currentSpace = board.get(currentPosition);
+        // Suggestion : String fightResult = currentSpace.interact(player);
+//        GameStatus status = currentSpace.interact(player);
+//        switch (status) {
+//            case ENNEMY_DEAD -> ..... ,
+//            case HERO_DEAD ->  ...
+//            ca
+//        }
         currentSpace.interact(player);
     }
 
@@ -224,5 +231,10 @@ public class Game {
      */
     public int getBoardSize() {
         return BOARD_SIZE;
+    }
+
+    public void retreatPlayer(Player player, int steps) {
+        currentPosition = Math.max(0, currentPosition - steps);
+        System.out.println(player.getName() + " se trouve maintenant sur la case " + currentPosition);
     }
 }

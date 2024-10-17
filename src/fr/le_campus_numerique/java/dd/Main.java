@@ -1,6 +1,7 @@
 package fr.le_campus_numerique.java.dd;
 
 import fr.le_campus_numerique.java.dd.game.Game;
+import fr.le_campus_numerique.java.dd.game.GameStatus;
 import fr.le_campus_numerique.java.dd.game.Menu;
 
 /**
@@ -13,7 +14,11 @@ public class Main {
      * @param args Command line arguments (not used in this application)
      */
     public static void main(String[] args) {
-        Game game = new Game();
-        game.startGame();
+//        Game game = new Game();
+//        game.startGame();
+
+
+        GameStatus status = GameStatus.HERO_DEAD;
+
     }
 }

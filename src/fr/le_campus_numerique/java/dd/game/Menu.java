@@ -81,9 +81,8 @@ public class Menu {
      */
     public String askUsePotion() {
         System.out.println("Voulez-vous utiliser une potion ? (oui/non)");
-        String result = scanner.nextLine();
 
-        return result;
+        return scanner.nextLine();
     }
 
     /**
@@ -137,9 +136,8 @@ public class Menu {
      */
     public String askToPlayAgain() {
         System.out.println("Voulez-vous jouer à nouveau ? (oui/non)");
-        String answer = scanner.nextLine().toLowerCase();
 
-        return answer;
+        return scanner.nextLine().toLowerCase();
     }
 
     /**

@@ -1,14 +1,19 @@
 package fr.le_campus_numerique.java.dd.enemy;
 
+import fr.le_campus_numerique.java.dd.game.GameStatus;
 import fr.le_campus_numerique.java.dd.space.Space;
 import fr.le_campus_numerique.java.dd.fight.Fighter;
 import fr.le_campus_numerique.java.dd.player.Player;
+import java.util.Scanner;
+import java.util.Random;
+
 
 /**
  * Represents an enemy in the game.
  * This class implements both Space and Fighter interfaces, allowing enemies to be placed on the game board and engage in combat.
  */
 public class Enemy implements Space, Fighter {
+
     private String name;
     private int attackStrength;
     private int healthPoint;
@@ -49,16 +54,34 @@ public class Enemy implements Space, Fighter {
      * @param player The player fighting the enemy
      */
     private void fight(Player player) {
-        if (this.isAlive() && player.isAlive()) {
-            System.out.println(player.getName() + " attaque !");
-            this.absorbAttack(player.getAttackStrength());
+        Random random = new Random();
+        Scanner scanner = new Scanner(System.in);
 
-            if (this.isAlive()) {
-                System.out.println(this.name + " contre-attaque !");
-                player.absorbAttack(this.attackStrength);
+        while (this.isAlive() && player.isAlive()) {
+            System.out.println(player.getName() + ", choisissez une action : attaquer (1) ou fuir (2) ?");
+            String action = scanner.nextLine();
 
-                fight(player);
+            if (action.equals("1")) {
+                System.out.println(player.getName() + " attaque !");
+                this.absorbAttack(player.getAttackStrength());
+
+                if (this.isAlive()) {
+                    System.out.println(this.name + " contre-attaque !");
+                    player.absorbAttack(this.attackStrength);
+                }
+            } else if (action.equals("2")) {
+                int retreatSteps = random.nextInt(6) + 1;
+                System.out.println(player.getName() + " fuit et recule de " + retreatSteps + " cases.");
+                return GameStatus.HERO_RETREAT;
+                retreatPlayer(player, retreatSteps);
+                break;
+            } else {
+                System.out.println("Action non reconnue. Vous devez choisir entre attaquer (1) ou fuir (2).");
             }
+        }
+
+        if (!this.isAlive()) {
+            System.out.println(this.name + " est terrassé !");
         }
     }
 
