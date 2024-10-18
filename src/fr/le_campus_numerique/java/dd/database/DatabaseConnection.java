@@ -5,7 +5,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+
+import fr.le_campus_numerique.java.dd.equipment.spell.LightningBolt;
+import fr.le_campus_numerique.java.dd.equipment.weapon.SledgeHammer;
 import fr.le_campus_numerique.java.dd.player.Player;
+import fr.le_campus_numerique.java.dd.player.Wizard;
+import fr.le_campus_numerique.java.dd.player.Warrior;
+import fr.le_campus_numerique.java.dd.equipment.OffensiveEquipment;
+import fr.le_campus_numerique.java.dd.equipment.DefensiveEquipment;
+import fr.le_campus_numerique.java.dd.equipment.weapon.Weapon;
+import fr.le_campus_numerique.java.dd.equipment.spell.Spell;
+import fr.le_campus_numerique.java.dd.equipment.philter.Philter;
+import fr.le_campus_numerique.java.dd.equipment.shield.Shield;
+
 
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/D&D";
@@ -25,7 +37,7 @@ public class DatabaseConnection {
     }
 
     public static void savePlayer(Player player) {
-        String sql = "INSERT INTO player (type, name, health_point, attack_strength) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO player (type, name, health_point, attack_strength, offensive_equipment, defensive_equipment) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -34,6 +46,8 @@ public class DatabaseConnection {
             statement.setString(2, player.getName());
             statement.setInt(3, player.getHealthPoint());
             statement.setInt(4, player.getAttackStrength());
+            statement.setString(5, player.getOffensiveEquipment().getName());
+            statement.setString(6, player.getDefensiveEquipment().getName());
 
             statement.executeUpdate();
             System.out.println("Joueur enregistré avec succès.");
@@ -43,7 +57,8 @@ public class DatabaseConnection {
     }
 
     public static Player getPlayerByName(String name) {
-        String query = "SELECT type, health_point, attack_strength FROM player WHERE name = name";
+        String query = "SELECT type, health_point, attack_strength, offensive_equipment, defensive_equipment FROM player WHERE name = ?";
+
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -56,18 +71,25 @@ public class DatabaseConnection {
                 int healthPoint = rs.getInt("health_point");
                 int attackStrength = rs.getInt("attack_strength");
 
-                Player player = null;
-                player.setHealthPoint(healthPoint);
-                player.setAttackStrength(attackStrength);
+                Player player;
+                if (type.equals("Guerrier")) {
+                    player = new Warrior(name);
+                } else if (type.equals("Magicien")) {
+                    player = new Wizard(name);
+                } else {
+                    System.out.println("Type de joueur inconnu : " + type);
+                    return null;
+                }
 
+                System.out.println("Joueur chargé avec succès : " + player.getName());
                 return player;
             } else {
-                System.out.println("Aucun joueur trouvé avec le nom : " + name);
+                System.out.println("Aucun joueur trouvé avec ce nom.");
+                return null;
             }
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération du joueur : " + e.getMessage());
+            System.out.println("Erreur lors du chargement du joueur : " + e.getMessage());
+            return null;
         }
-
-        return null;
     }
 }

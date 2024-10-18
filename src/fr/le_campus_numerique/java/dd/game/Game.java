@@ -255,7 +255,7 @@ public class Game {
     }
 
     public Player loadPlayer() {
-        String name = menu.getInput("Entrez le nom de votre personnage à charger :");
+        String name = menu.getInput("Entrez le nom de votre personnage à charger (ou entrée si vous n'en avais pas) :");
         Player player = DatabaseConnection.getPlayerByName(name);
         if (player != null) {
             menu.displayPlayer(player);
