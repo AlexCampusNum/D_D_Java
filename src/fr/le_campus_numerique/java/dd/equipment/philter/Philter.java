@@ -1,5 +1,6 @@
 package fr.le_campus_numerique.java.dd.equipment.philter;
 
+import fr.le_campus_numerique.java.dd.game.GameStatus;
 import fr.le_campus_numerique.java.dd.player.Player;
 import fr.le_campus_numerique.java.dd.space.Space;
 import fr.le_campus_numerique.java.dd.equipment.DefensiveEquipment;
@@ -33,13 +34,17 @@ public class Philter extends DefensiveEquipment implements Space {
      * @param player The player interacting with the philter
      */
     @Override
-    public void interact(Player player) {
-        System.out.println("Vous trouvez une " + getName());
+    public GameStatus interact(Player player) {
+        System.out.println("Vous trouvez un " + getName());
         if (player instanceof Wizard && this.getDefenseLevel() > player.getDefensiveEquipment().getDefenseLevel()) {
             player.setDefensiveEquipment(this);
             System.out.println(player.getName() + " est maintenant équipé avec un " + getName());
+
+            return GameStatus.PHILTER_ACTIVED;
         } else {
             System.out.println("Ce personnage ne peut pas équiper ce philtre.");
+
+            return GameStatus.NOTHING_CHANGED;
         }
     }
 }

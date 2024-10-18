@@ -38,13 +38,21 @@ public class Enemy implements Space, Fighter {
      * @param player The player interacting with the enemy
      */
     @Override
-    public void interact(Player player) {
+    public GameStatus interact(Player player) {
         System.out.println("Vous vous retrouvez face à un " + this.name);
         System.out.println("Ce " + this.name + " a un niveau de vie de " + this.healthPoint);
         System.out.println("Votre niveau de vie est de " + player.getHealthPoint());
         System.out.println("Le combat commence contre ce " + this.name);
 
-        fight(player);
+        GameStatus status = fight(player);
+
+        if (status == GameStatus.ENNEMY_DEAD) {
+            System.out.println(this.name + " est terrassé !");
+        } else if (status == GameStatus.HERO_RETREAT) {
+            System.out.println(player.getName() + " a fui le combat.");
+        }
+
+        return status;
     }
 
     /**
@@ -53,15 +61,21 @@ public class Enemy implements Space, Fighter {
      *
      * @param player The player fighting the enemy
      */
-    private void fight(Player player) {
-        Random random = new Random();
+    private GameStatus fight(Player player) {
         Scanner scanner = new Scanner(System.in);
+        String action = "";
 
-        while (this.isAlive() && player.isAlive()) {
+        while (!action.equals("1") && !action.equals("2")) {
             System.out.println(player.getName() + ", choisissez une action : attaquer (1) ou fuir (2) ?");
-            String action = scanner.nextLine();
+            action = scanner.nextLine();
 
-            if (action.equals("1")) {
+            if (!action.equals("1") && !action.equals("2")) {
+                System.out.println("Action non reconnue. Vous devez choisir entre attaquer (1) ou fuir (2).");
+            }
+        }
+
+        if (action.equals("1")) {
+            while (this.isAlive() && player.isAlive()) {
                 System.out.println(player.getName() + " attaque !");
                 this.absorbAttack(player.getAttackStrength());
 
@@ -69,20 +83,14 @@ public class Enemy implements Space, Fighter {
                     System.out.println(this.name + " contre-attaque !");
                     player.absorbAttack(this.attackStrength);
                 }
-            } else if (action.equals("2")) {
-                int retreatSteps = random.nextInt(6) + 1;
-                System.out.println(player.getName() + " fuit et recule de " + retreatSteps + " cases.");
-                return GameStatus.HERO_RETREAT;
-                retreatPlayer(player, retreatSteps);
-                break;
-            } else {
-                System.out.println("Action non reconnue. Vous devez choisir entre attaquer (1) ou fuir (2).");
             }
+
+            return GameStatus.NOTHING_CHANGED;
+        } else if (action.equals("2")) {
+            return GameStatus.HERO_RETREAT;
         }
 
-        if (!this.isAlive()) {
-            System.out.println(this.name + " est terrassé !");
-        }
+        return GameStatus.NOTHING_CHANGED;
     }
 
     /**

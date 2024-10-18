@@ -1,5 +1,6 @@
 package fr.le_campus_numerique.java.dd.equipment.spell;
 
+import fr.le_campus_numerique.java.dd.game.GameStatus;
 import fr.le_campus_numerique.java.dd.player.Player;
 import fr.le_campus_numerique.java.dd.space.Space;
 import fr.le_campus_numerique.java.dd.equipment.OffensiveEquipment;
@@ -10,7 +11,7 @@ import fr.le_campus_numerique.java.dd.player.*;
  * This class extends OffensiveEquipment and implements the Space interface,
  * allowing spells to be placed on the game board and interacted with.
  */
-public class Spell extends OffensiveEquipment implements Space {
+public class Spell extends OffensiveEquipment {
 
     /**
      * Constructs a new Spell with specified attributes.
@@ -33,13 +34,17 @@ public class Spell extends OffensiveEquipment implements Space {
      * @param player The player interacting with the spell
      */
     @Override
-    public void interact(Player player) {
+    public GameStatus interact(Player player) {
         System.out.println("Vous trouvez un sort " + getName());
         if (player instanceof Wizard && this.getAttackLevel() > player.getOffensiveEquipment().getAttackLevel()) {
             player.setOffensiveEquipment(this);
             System.out.println(player.getName() + " est maintenant équipé avec le sort " + getName());
+
+            return GameStatus.SPELL_ACTIVED;
         } else {
             System.out.println("Ce personnage ne peut pas s'équiper de ce sort " + getName());
+
+            return GameStatus.NOTHING_CHANGED;
         }
     }
 }

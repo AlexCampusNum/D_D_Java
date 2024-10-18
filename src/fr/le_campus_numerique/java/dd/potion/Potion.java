@@ -1,5 +1,6 @@
 package fr.le_campus_numerique.java.dd.potion;
 
+import fr.le_campus_numerique.java.dd.game.GameStatus;
 import fr.le_campus_numerique.java.dd.space.Space;
 import fr.le_campus_numerique.java.dd.player.Player;
 import java.util.Scanner;
@@ -35,7 +36,7 @@ public class Potion implements Space {
      *
      * @param player The player interacting with the potion
      */
-    public void interact(Player player){
+    public GameStatus interact(Player player){
         System.out.println("Vous trouvez une " + this.name);
         System.out.println("Voulez vous utiliser cette " + this.name + " ou la stocker ?");
         System.out.println("1. Utiliser");
@@ -54,9 +55,15 @@ public class Potion implements Space {
         if (choix == 1) {
             player.setHealthPoint(player.getHealthPoint() + this.value);
             System.out.println("Votre niveau de vie augmente à : " + player.getHealthPoint());
+
+            return GameStatus.HERO_HEALS;
         } else if (choix == 2) {
             player.setStock(this);
+
+            return GameStatus.POTION_STOCKED;
         }
+
+        return null;
     }
 
     /**

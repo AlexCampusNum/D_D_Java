@@ -1,5 +1,6 @@
 package fr.le_campus_numerique.java.dd.space;
 
+import fr.le_campus_numerique.java.dd.game.GameStatus;
 import fr.le_campus_numerique.java.dd.player.Player;
 
 /**
@@ -14,5 +15,5 @@ public interface Space {
      *
      * @param player The player interacting with the space
      */
-    void interact(Player player);
+    GameStatus interact(Player player);
 }

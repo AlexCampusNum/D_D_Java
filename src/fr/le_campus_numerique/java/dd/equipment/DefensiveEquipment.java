@@ -1,10 +1,12 @@
 package fr.le_campus_numerique.java.dd.equipment;
 
+import fr.le_campus_numerique.java.dd.space.Space;
+
 /**
  * Represents an abstract defensive equipment in the game.
  * This class provides a base for all types of defensive equipment.
  */
-public abstract class DefensiveEquipment {
+public abstract class DefensiveEquipment implements Space {
     private String type;
     private int defenseLevel;
     private String name;

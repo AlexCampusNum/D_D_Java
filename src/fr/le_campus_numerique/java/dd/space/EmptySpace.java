@@ -1,5 +1,6 @@
 package fr.le_campus_numerique.java.dd.space;
 
+import fr.le_campus_numerique.java.dd.game.GameStatus;
 import fr.le_campus_numerique.java.dd.player.Player;
 
 /**
@@ -14,7 +15,9 @@ public class EmptySpace implements Space {
      *
      * @param player The player interacting with the empty space
      */
-    public void interact(Player player) {
+    public GameStatus interact(Player player) {
         System.out.println("Case vide, mais restez sur vos gardes");
+
+        return GameStatus.EMPTY_SPACE;
     }
 }

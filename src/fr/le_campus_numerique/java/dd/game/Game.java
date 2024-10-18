@@ -7,6 +7,7 @@ import fr.le_campus_numerique.java.dd.player.Player;
 import fr.le_campus_numerique.java.dd.potion.*;
 import fr.le_campus_numerique.java.dd.space.Space;
 import fr.le_campus_numerique.java.dd.space.EmptySpace;
+import fr.le_campus_numerique.java.dd.database.DatabaseConnection;
 
 import java.util.Objects;
 import java.util.Random;
@@ -18,12 +19,13 @@ import java.util.Collections;
  * This class manages the game board, player movement, and game flow.
  */
 public class Game {
-    ArrayList<Space> board = new ArrayList();
+    ArrayList<Space> board;
     private final int BOARD_SIZE = 64;
     private Player player;
     private int currentPosition;
     private Random dice;
     private Menu menu;
+//    private GameStatus status;
 
     /**
      * Constructs a new Game object.
@@ -31,10 +33,13 @@ public class Game {
      */
     public Game() {
         this.menu = new Menu();
-        this.player = menu.createPlayer();
+        this.player = loadPlayer();
+        if (this.player == null) {
+            this.player = menu.createPlayer();
+        }
         this.currentPosition = 0;
         this.dice = new Random();
-        this.initBoard(BOARD_SIZE);
+        this.board = this.initBoard(BOARD_SIZE);
     }
 
     /**
@@ -42,15 +47,13 @@ public class Game {
      *
      * @param size The size of the game board
      */
-    public void initBoard(int size){
-        if(board == null) {
-            board = new ArrayList<Space>(size);
-
-        }else{
-            board.clear();
-            board.ensureCapacity(size);
+    public ArrayList<Space> initBoard(int size){
+        ArrayList<Space> boardToCreate = new ArrayList<>(64);
+//        boardToCreate.ensureCapacity(size);
+//        Collections.fill(boardToCreate, new EmptySpace());
+        for (int i = 0; i < size; i++) {
+            boardToCreate.add(new EmptySpace());
         }
-        Collections.fill(board, new EmptySpace());
 
         int[] dragons = {44, 51, 55, 61};
         int[] sorcerers = {9, 19, 2, 31, 34, 35, 36, 39, 43, 46};
@@ -63,33 +66,34 @@ public class Game {
         int[] bigPotions = {27, 40};
 
         for(int dragon : dragons){
-            board.set(dragon, new Dragon());
+            boardToCreate.set(dragon, new Dragon());
         }
         for(int sorcerer : sorcerers){
-            board.set(sorcerer, new Sorcerer());
+            boardToCreate.set(sorcerer, new Sorcerer());
         }
         for(int goblin : goblins){
-            board.set(goblin, new Goblin());
+            boardToCreate.set(goblin, new Goblin());
         }
         for(int sledgeHammer : sledgeHammers){
-            board.set(sledgeHammer, new SledgeHammer());
+            boardToCreate.set(sledgeHammer, new SledgeHammer());
         }
         for(int sword : swords){
-            board.set(sword, new Sword());
+            boardToCreate.set(sword, new Sword());
         }
         for(int lightning : lightnings){
-            board.set(lightning, new LightningBolt());
+            boardToCreate.set(lightning, new LightningBolt());
         }
         for(int fireBall : fireBalls){
-            board.set(fireBall, new FireBall());
+            boardToCreate.set(fireBall, new FireBall());
         }
         for(int standardPotion : standardPotions){
-            board.set(standardPotion, new StandardPotion());
+            boardToCreate.set(standardPotion, new StandardPotion());
         }
         for(int bigPotion : bigPotions){
-            board.set(bigPotion, new BigPotion());
+            boardToCreate.set(bigPotion, new BigPotion());
         }
-        Collections.shuffle(board);
+        Collections.shuffle(boardToCreate);
+        return boardToCreate;
     }
 
     /**
@@ -108,19 +112,20 @@ public class Game {
             if(!Objects.equals(player.getStockIndex(), 0)) {
                 String result = menu.askUsePotion();
                 if (result.equals("oui")) {
-                    player.useStockPotion(player.getStockIndex());
+                    player.useStockPotion(player.getStockIndex() -1);
                 }
             }
-            menu.getInput("Vous pouvez quitter à tout instant (exit)");
+//            menu.getInput("Vous pouvez quitter à tout instant (exit)");
             menu.nextTurn();
 
             int roll = rollDice();
             menu.displayRollDice(roll);
 
+
+
             try {
                 boolean gameFinished = playTurn(roll);
-                menu.displayCase(getCurrentPosition(), getBoardSize());
-
+//                menu.displayCase(getCurrentPosition(), getBoardSize());
                 if (gameFinished) {
                     menu.displayFinished();
                     if (!askToPlayAgain()) {
@@ -188,15 +193,25 @@ public class Game {
         }
 
         currentPosition = newPosition;
+
+        menu.displayCase(getCurrentPosition(), getBoardSize());
+
+
         Space currentSpace = board.get(currentPosition);
-        // Suggestion : String fightResult = currentSpace.interact(player);
-//        GameStatus status = currentSpace.interact(player);
-//        switch (status) {
-//            case ENNEMY_DEAD -> ..... ,
-//            case HERO_DEAD ->  ...
-//            ca
-//        }
-        currentSpace.interact(player);
+
+        GameStatus status = currentSpace.interact(player);
+        switch (status) {
+            case ENNEMY_DEAD:
+                break;
+            case IN_FIGHT:
+
+            case HERO_RETREAT:
+                currentPosition = heroRetreat();
+                currentSpace = board.get(currentPosition);
+                currentSpace.interact(player);
+                break;
+        }
+//        currentSpace.interact(player);
     }
 
     /**
@@ -233,8 +248,21 @@ public class Game {
         return BOARD_SIZE;
     }
 
-    public void retreatPlayer(Player player, int steps) {
-        currentPosition = Math.max(0, currentPosition - steps);
-        System.out.println(player.getName() + " se trouve maintenant sur la case " + currentPosition);
+    private int heroRetreat() {
+        Random random = new Random();
+        int retreatSteps = random.nextInt(6) + 1;
+        return Math.max(0, currentPosition - retreatSteps);
+    }
+
+    public Player loadPlayer() {
+        String name = menu.getInput("Entrez le nom de votre personnage à charger :");
+        Player player = DatabaseConnection.getPlayerByName(name);
+        if (player != null) {
+            menu.displayPlayer(player);
+            return player;
+        } else {
+            System.out.println("Aucun personnage trouvé avec ce nom.");
+            return null;
+        }
     }
 }

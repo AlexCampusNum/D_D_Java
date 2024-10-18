@@ -3,6 +3,7 @@ package fr.le_campus_numerique.java.dd.game;
 import fr.le_campus_numerique.java.dd.player.Player;
 import fr.le_campus_numerique.java.dd.player.Wizard;
 import fr.le_campus_numerique.java.dd.player.Warrior;
+import fr.le_campus_numerique.java.dd.database.DatabaseConnection;
 import java.util.Scanner;
 
 /**
@@ -56,9 +57,12 @@ public class Menu {
                 System.out.println("Type non reconnu. Création d'un Magicien par défaut.");
                 player = new Wizard(name);
             }
+
             displayPlayer(player);
             modify(player);
             displayWithDelay("Vous voyez des vêtements apparaître sur vous, cela ressemble à une tenue de " + player.getType(), 2000);
+
+            DatabaseConnection.savePlayer(player);
 
             return player;
         }

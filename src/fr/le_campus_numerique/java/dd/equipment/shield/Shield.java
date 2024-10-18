@@ -1,5 +1,6 @@
 package fr.le_campus_numerique.java.dd.equipment.shield;
 
+import fr.le_campus_numerique.java.dd.game.GameStatus;
 import fr.le_campus_numerique.java.dd.player.Player;
 import fr.le_campus_numerique.java.dd.space.Space;
 import fr.le_campus_numerique.java.dd.equipment.DefensiveEquipment;
@@ -33,13 +34,17 @@ public class Shield extends DefensiveEquipment implements Space {
      * @param player The player interacting with the shield
      */
     @Override
-    public void interact(Player player) {
+    public GameStatus interact(Player player) {
         System.out.println("Vous trouvez une " + getName());
         if (player instanceof Warrior && this.getDefenseLevel() > player.getDefensiveEquipment().getDefenseLevel()) {
             player.setDefensiveEquipment(this);
             System.out.println(player.getName() + " est maintenant équipé avec un " + getName());
+
+            return GameStatus.SHIELD_ACTIVED;
         } else {
             System.out.println("Ce personnage ne peut pas équiper ce bouclier.");
+
+            return GameStatus.NOTHING_CHANGED;
         }
     }
 }
